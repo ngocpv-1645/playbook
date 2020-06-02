@@ -1,5 +1,5 @@
-query Articles($id: ID!) {
-  article(id: $id) {
+query Articles($slug: String!) {
+  article(where: {slug: $slug}) {
     id
     title
     content

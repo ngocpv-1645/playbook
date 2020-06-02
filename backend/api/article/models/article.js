@@ -1,5 +1,5 @@
 'use strict';
-
+const slugify = require('slugify');
 /**
  * Lifecycle callbacks for the `article` model.
  */
@@ -7,6 +7,13 @@
 module.exports = {
   // Before saving a value.
   // Fired before an `insert` or `update` query.
+  beforeSave: async (model, attrs, options) => {
+    if (options.method === 'insert' && attrs.title) {
+      model.set('slug', slugify(attrs.title, {lower: true}));
+    } else if (options.method === 'update' && attrs.title) {
+      attrs.slug = slugify(attrs.title, {lower: true});
+    }
+  },
   // beforeSave: async (model, attrs, options) => {},
 
   // After saving a value.

@@ -29,7 +29,7 @@
         <div class="uk-child-width-1-2@m uk-grid-match" uk-grid>
           <router-link
             v-for="article in rightArticles"
-            :to="{ name: 'articles-id', params: { id: article.id } }"
+            :to="{ name: 'slug', params: { slug: article.slug } }"
             class="uk-link-reset"
             :key="article.id"
           >
