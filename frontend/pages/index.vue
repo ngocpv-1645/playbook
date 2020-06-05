@@ -1,12 +1,20 @@
 <template>
   <div>
-
+    <div v-for="hero in heroes"
+        v-if="hero.image"
+        id="hero"
+        class=" uk-section uk-height-small uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light uk-padding"
+        :data-src="api_url + hero.image.url"
+        uk-img>
+      >
+      <h1>
+        {{hero.title}}
+      </h1>
+      <button>{{ hero.button }}</button>
+    </div>
     <div class="uk-section">
       <div class="uk-container uk-container-large">
-        <h1>Strapi blog</h1>
-
         <Articles :articles="articles"></Articles>
-
       </div>
     </div>
 
@@ -15,12 +23,15 @@
 
 <script>
 import articlesQuery from '~/apollo/queries/article/articles'
+import heroQuery from '~/apollo/queries/hero/heroes'
 import Articles from '~/components/Articles'
 
 export default {
   data() {
     return {
       articles: [],
+      heroes: [],
+      api_url: process.env.strapiBaseUri
     }
   },
   components: {
@@ -30,6 +41,13 @@ export default {
     articles: {
       prefetch: true,
       query: articlesQuery,
+      variables () {
+        return { id: parseInt(this.$route.params.id) }
+      }
+    },
+    heroes: {
+      prefetch: true,
+      query: heroQuery,
       variables () {
         return { id: parseInt(this.$route.params.id) }
       }
